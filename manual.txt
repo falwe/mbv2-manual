@@ -1,0 +1,103 @@
+Mailbulker v2 by falwe and chatgpt
+Last update:2024/04/27 16:47
+
+このスクリプトはメールアドレスにstmpを介して一括送信するスクリプトです
+
+- 新機能
+ユニークなcuiを搭載
+conf.jsonの追加
+Comboのドメインを統計する機能を搭載
+メールのインポート（JSON）/メールの情報が入ったJSONの作成
+複数の添付ファイルを送信するのをjsonで解決
+バグを修正
+
+-　設定方法 -
+メールを送るにはますsmtpと送り先となるメールが必要です
+smtp用のtxtファイル（smtp.txt)に
+サーバー|ポート|メールアドレス|パスワード
+のような形式のsmtpをsmtp.txtに入れてください
+
+メールアドレスのリストはsendto.txtにあります、sendto.txtにメールアドレスのリストを入れてください
+改行で区切ります
+
+- How to send mail? -
+
+メールを送信する方法は直接入力する方法とJSONから読み込む方法があります
+- 直接入力する方法
+選択するセッションで1を選択します
+TItle（件名）を入力します
+概要を入力します（\\nで改行、"smtp.usehtml(path)でhtmlを読み込む、終了したいなら何も入力せずにエンターを押してください）
+添付ファイルの有無を確認します
+
+これでメールが送信されます
+- Use Combo analysis -
+
+comboの解析を開始します
+
+選択するセッションで2を選択します
+メールアドレスが入ったtxtファイル一番使用されてるドメイン1~10位をパーセントで表示します
+
+- conf.json/設定のやり方 -
+
+v2では省略するけどいろいろ設定可能になりました
+選択するセッションで3を選択したら設定できます
+項目は以下の通り:
+PatchNote - パッチノートの表示を許可するかの設定、bool型
+SMTPFile - smtpの情報が入ってるtxtファイルのpath
+MailListFile - メールアドレスが入ってるtxtファイルのpath
+ImportMailFromJSON - 「メールをインポートする方法」を参照
+
+- メールをインポートする方法 -
+v2ではメールを打つ手間を省くためメールをインポートできるようになりました
+この機能を発揮するには、conf.jsonを開きImportMailFromJSONの"IsActive?"をTrueにするか
+スクリプトを実行して選択するセッションで3を選択して
+ImportMailFromJSON -> IsActive?
+のように選択してTrueに書き換えてください
+インポートする方法は2つの方法があります
+
+1. メールの情報が入ったJSONから読みこむ
+conf.jsonのImportMailFromJSONにあるFromPathを設定します
+FromPathにある項目：
+FromPathActive - pathからインポートするかの有無
+MailJSONPath - メールの情報が入ったjsonファイルのpath
+MailJSONPathの値をメールの情報が入ったjsonがあるpathに書き換えます
+
+2. conf.jsonを編集して直接読み込む
+非推奨です
+conf.jsonを開いてImportMailFromJSONを編集します
+注：FromPathが有効の場合FromPathが優先されます、使用する時はFromPathのFromPathActiveをFalseにしてください
+以下はImportMailFromJsonの項目：
+IsActive?とFromPathは省略
+Title - 件名
+Desc - Descriptionの略、概要
+HTML - HTMLを読み込みます、UseHTMLは使用するかの有無、PathはHTMLがあるpath
+Attachments - 添付ファイルを送るようにします、UseAttachmentsは添付ファイルを送るかの有無、Attachmentsは送るファイルのpath（複数可）
+
+- メールの情報が入ったjsonの作成 -
+v2ではメールの情報が入ったjsonを作成する機能も搭載してます
+洗濯するセッションで4を選んでファイル名を入力しいつも通りに件名や概要を入力したら生成できます
+
+- FAQ - 
+Q. (535, b'Incorrect authentication data')みたいなエラーでてきた
+A. smtpのログイン情報が間違ってるね、smtpに誤りがないか見てみよう
+
+Q. Timeoutした
+A. それは多分smtpが死んでます
+
+Q. 送ったように見えるけど受信されない
+A. 多分ip banかshadow ban的な何かです、replitか別のpc使いましょう
+
+Q. 謎のエラー吐いた
+A. falwe(discord)にdmしてください
+
+- 将来的に追加される機能 -
+Worker（同時処理数）の設定
+SSLの実装
+証明書のCheck
+メールの情報が入ったJSONの管理
+Comboからメールを抽出する機能
+
+- 最後に -
+このスクリプトはは二次配布禁止です
+
+マニュアル終わり
